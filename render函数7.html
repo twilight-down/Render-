@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    #messageId {
+        color: black;
+    }
+    
+    .messageClass {
+        background-color: lightblue;
+        /* color: red; */
+    }
+</style>
+
+<body>
+    <div id='app'>
+        <message :level="2">
+            <a href="javaScript:;">今天的云和你</a></br>
+            <span>Twilight</span>
+            <div>Down</div>
+        </message>
+    </div>
+
+    <script src='../vue.js'></script>
+    <script>
+        // 全局注册的子组件
+        Vue.component('message', {
+            render: function(h) {
+                let childNodes = [h('div', {}, '挂载的位置1')]
+                return h(
+                    // HTML标签，组件选项对象
+                    'h' + this.level, {
+                        // data属性对象
+                        on: {
+                            // click: () => alert(this.alertMessage)
+                            click: this.handelClick
+                                // click: () => {
+                                //     console.log(this.$slots)
+                                // }
+                        },
+                        // domProps: {
+                        //     innerHTML: '暮色凛然'
+                        // },
+                        // style: {
+                        //     color: 'skyblue',
+                        //     fontSize: '30px'
+                        // },
+                        attrs: {
+                            id: 'messageId',
+                            class: 'messageClass'
+                        }
+
+
+                    },
+                    // 虚拟子节点
+                    this.$slots.default
+                    // this.alertMessage
+                    // childNodes
+                    // 'Render函数的虚拟节点'
+                )
+            },
+            props: {
+                level: {
+                    type: Number,
+                    required: true
+                }
+            },
+            data() {
+                return {
+                    alertMessage: 'alert'
+                }
+            },
+            methods: {
+                handelClick() {
+                    console.log(this.$slots);
+                }
+            }
+
+        })
+
+
+
+        const app = new Vue({
+            el: '#app',
+            // render: function(h) {
+            //     return h('message', {
+            //         // domProps: {
+            //         //     innerHTML: '暮色凛然'
+            //         // },
+            //     }, this.$slots.default)
+            // }
+
+        })
+    </script>
+
+</body>
+
+</html>
